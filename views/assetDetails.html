@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asset Details </title>
+</head>
+<body>
+    <div align="center">
+    <input type="text" id="productID" placeholder="Enter your asset ID"></input><br>
+    <button type="button" onClick="getDetails()">Get Asset Details </button>
+    </div>
+
+    <div align="center">
+        <div id="name"></div><br>
+        <div id="desc"></div><br>
+        <div id="status"></div><br>
+        <div id="productid"></div><br>
+        <div id="customeraddress"></div><br>
+        <div id="rawmateriallimit"></div><br>
+        <div id="productionmateriallimit"></div><br>
+
+
+        <div id="macRawMaterialId"></div><br>
+        <div id="macRawMaterialOrigin"></div><br>
+        <div id="macRawMaterialQuality"></div><br>
+        <div id="macRawMaterialQuantity"></div><br>
+
+        <div id="macMachineNumber"></div><br>
+        <div id="macQualityOfProduct"></div><br>
+        <div id="macQuantityOfProduct"></div><br>
+
+        
+
+        
+        
+        
+
+
+
+
+        
+
+
+    </div>
+    <div id="trial"></div>
+
+    
+
+
+</body>
+
+<script>
+
+web3 = new Web3(web3.currentProvider);
+web3.eth.defaultAccount = web3.eth.accounts[0];
+var AssetTrackerRopstenAddress = '0x7f275a042801ff6deaad9e4f56b6b802b84ed5eb';
+var AssetTrackerABI = web3.eth.contract (
+    [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_logLocationIdOnRack",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_logLocationName",
+                    "type": "string"
+                }
+            ],
+            "name": "addDetailLogistic",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_machineNumber",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_macQualityOfProduct",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_macQuantityOfProduct",
+                    "type": "uint256"
+                }
+            ],
+            "name": "addDetailProductionStakeHolder",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_rawMaterialId",
+                    "type": "uint256"
+                },
+                {
+                    "name": "rawMaterialQuality",
+                    "type": "uint256"
+                },
+                {
+                    "name": "rawMaterialQuantity",
+                    "type": "uint256"
+                },
+                {
+                    "name": "origin",
+                    "type": "string"
+                }
+            ],
+            "name": "addDetailRawMaterialStakeHolder",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_macLocationIdOnRack",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_macLocationName",
+                    "type": "string"
+                }
+            ],
+            "name": "addDetailShipmentStakeHolder",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "name": "_desc",
+                    "type": "string"
+                },
+                {
+                    "name": "_productionQualityLowerLimit",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_rawMaterialQualityLowerLimit",
+                    "type": "uint256"
+                }
+            ],
+            "name": "placeOrder",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_assemblyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "setAssemblyAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "newContractCreator",
+                    "type": "address"
+                }
+            ],
+            "name": "setContractCreator",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_logisticAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "setLogisticAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "newMachiningAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "setMachiningAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "name": "_machiningAddress",
+                    "type": "address"
+                },
+                {
+                    "name": "_logisticAddress",
+                    "type": "address"
+                },
+                {
+                    "name": "_assemblyAddress",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "assetIdToOwner",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getAssetOverview",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getAssetProductionInformation",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getAssetRawMaterialInformation",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getAssetShipmentInformation",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getLogisticInformation",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "last",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+);
+var ContractInstance = AssetTrackerABI.at(AssetTrackerRopstenAddress);
+function getDetails(){
+
+    var id = document.getElementById('productID').value;
+
+    ContractInstance.getAssetOverview(id,function(e,r){
+        if(!e){
+            // fetch other details after checking status 
+            console.log("from getAssetOverview we got this "+r);
+            document.getElementById('name').innerHTML="Name of asset  : "+r[0].toString();
+            document.getElementById('desc').innerHTML="Description of asset  : "+r[1].toString();
+            document.getElementById('status').innerHTML="Status of asset is : "+ getStatusDetail(r[2]);
+            document.getElementById('productid').innerHTML="Product ID : "+r[3].toString();
+            document.getElementById('customeraddress').innerHTML="Owner Address :"+r[4].toString();
+            document.getElementById('rawmateriallimit').innerHTML="Raw Material Quality Limit :"+r[5].toString();
+            document.getElementById('productionmateriallimit').innerHTML="Production Quality Limit :"+r[6].toString();
+            
+            if(r[2]==21){
+                printRawMaterialData(id);
+            }
+            if(r[2]==22){
+                printRawMaterialData(id);
+                printProductionData(id);
+            }
+            if(r[2]==30){
+                printRawMaterialData(id);
+                printProductionData(id);
+                printShippingData(id);
+            }
+            if(r[3]==11){
+                printRawMaterialData(id);
+                printProductionData(id);
+                printShippingData(id);
+                printLogisticData(id);
+            }
+
+        }
+        else{
+            console.log("from getAsset Overview this error has occurred"+e);
+        }
+    });
+
+}
+function getStatusDetail(status){
+    if(status==20){
+        return "Product with the machining department in the Raw Material Stage";
+    }
+    else if(status==21){
+        return "Product is with machining department in the Production Stage";
+    }
+    else if(status==22){
+        return "Product is with machining department in the Shipping Stage";
+    }
+    else if (status==30){
+        return "Product is with the Logistic Department ";
+    }
+    else if(status==11){
+        return "Product is ready !!";
+    }
+    else{
+        return "some error";
+    }
+}
+
+function printRawMaterialData(id){
+    ContractInstance.getAssetRawMaterialInformation(id,function(e,r){
+        if(!e){
+            console.log("from  getAssetRawMaterialInformation we got this "+r);
+            document.getElementById('macRawMaterialId').innerHTML="Raw Material ID of asset : "+r[0].toString();
+            document.getElementById('macRawMaterialOrigin').innerHTML="Raw Material Origin of asset : "+r[1].toString();
+            document.getElementById('macRawMaterialQuality').innerHTML="Raw Material Quality of asset : "+r[2].toString();
+            document.getElementById('macRawMaterialQuantity').innerHTML="Raw Material Quantity of asset : "+r[3].toString();
+
+        }
+        else
+        {
+            console.log("from getAssetRawMaterialInformation this error has occurred"+e);  
+        }
+    });
+}
+
+function printProductionData(id){
+    ContractInstance.getAssetProductionInformation(id,function(e,r){
+        if(!e){
+            console.log("from  getAssetProductionInformation we got this "+r);
+            document.getElementById('macMachineNumber').innerHTML="Machine Number : "+r[0].toString();
+            document.getElementById('macQualityOfProduct').innerHTML="Quality of asset : "+r[1].toString();
+            document.getElementById('macQuantityOfProduct').innerHTML="Quantity of asset : "+r[2].toString();
+            
+        }
+        else
+        {
+            console.log("from getAssetProductionInformation this error has occurred"+e);  
+        }
+    });
+}
+function printShippingData(id){
+
+}
+function printLogisticData(id){
+    
+}
+</script>
+</html>

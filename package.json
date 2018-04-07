@@ -1,0 +1,15 @@
+{
+  "name": "assettracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "contractInstance.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^6.0.0",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3",
+    "web3": "^1.0.0-beta.33"
+  }
+}
