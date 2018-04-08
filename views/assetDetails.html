@@ -33,8 +33,10 @@
         <div id="macQuantityOfProduct"></div><br>
 
         
-
-        
+        <div id="macLocationIdOnRack"></div><br>
+        <div id="macLocationName"></div><br>
+        <div id="logLocationIdOnRack"></div><br>
+        <div id="logLocationName"></div><br>
         
         
 
@@ -461,6 +463,7 @@ function getDetails(){
             
             if(r[2]==21){
                 printRawMaterialData(id);
+                console.log("here");
             }
             if(r[2]==22){
                 printRawMaterialData(id);
@@ -471,7 +474,8 @@ function getDetails(){
                 printProductionData(id);
                 printShippingData(id);
             }
-            if(r[3]==11){
+            if(r[2]==11){
+                console.log("hey");
                 printRawMaterialData(id);
                 printProductionData(id);
                 printShippingData(id);
@@ -540,11 +544,31 @@ function printProductionData(id){
 }
 //TODO
 function printShippingData(id){
-
+    ContractInstance.getAssetShipmentInformation(id,function(e,r){
+        if(!e){
+            console.log("from  getAssetShipmentInformation we got this "+r);
+            document.getElementById('macLocationIdOnRack').innerHTML="Shipment Location on Rack is"+r[0].toString();
+            document.getElementById('macLocationName').innerHTML="Shipment Location Name is : "+r[1].toString();
+        }
+        else
+        {
+            console.log("from getAssetShipmentInformation this error has occurred"+e);  
+        }
+    });
 }
 //TODO
 function printLogisticData(id){
-
+    ContractInstance.getLogisticInformation(id,function(e,r){
+        if(!e){
+            console.log("from  getLogisticInformation we got this "+r);
+            document.getElementById('logLocationIdOnRack').innerHTML="Logistic Department Location on Rack is"+r[0].toString();
+            document.getElementById('logLocationName').innerHTML="Logistic Department Location Name is : "+r[1].toString();
+        }
+        else
+        {
+            console.log("from getLogisticInformation this error has occurred"+e);  
+        }
+    });
 }
 </script>
 </html>
