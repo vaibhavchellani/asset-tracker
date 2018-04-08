@@ -37,20 +37,9 @@
         <div id="macLocationName"></div><br>
         <div id="logLocationIdOnRack"></div><br>
         <div id="logLocationName"></div><br>
-        
-        
-
-
-
-
-        
-
-
+    
     </div>
     <div id="trial"></div>
-
-    
-
 
 </body>
 
@@ -452,6 +441,7 @@ function getDetails(){
     ContractInstance.getAssetOverview(id,function(e,r){
         if(!e){
             // fetch other details after checking status 
+            initialise();
             console.log("from getAssetOverview we got this "+r);
             document.getElementById('name').innerHTML="Name of asset  : "+r[0].toString();
             document.getElementById('desc').innerHTML="Description of asset  : "+r[1].toString();
@@ -513,12 +503,12 @@ function getStatusDetail(status){
 function printRawMaterialData(id){
     ContractInstance.getAssetRawMaterialInformation(id,function(e,r){
         if(!e){
+            
             console.log("from  getAssetRawMaterialInformation we got this "+r);
             document.getElementById('macRawMaterialId').innerHTML="Raw Material ID of asset : "+r[0].toString();
             document.getElementById('macRawMaterialOrigin').innerHTML="Raw Material Origin of asset : "+r[1].toString();
             document.getElementById('macRawMaterialQuality').innerHTML="Raw Material Quality of asset : "+r[2].toString();
             document.getElementById('macRawMaterialQuantity').innerHTML="Raw Material Quantity of asset : "+r[3].toString();
-
         }
         else
         {
@@ -569,6 +559,28 @@ function printLogisticData(id){
             console.log("from getLogisticInformation this error has occurred"+e);  
         }
     });
+}
+function initialise(){
+    console.log("Called");
+    document.getElementById('name').innerHTML="";
+            document.getElementById('desc').innerHTML="";
+            document.getElementById('status').innerHTML="";
+            document.getElementById('productid').innerHTML="";
+            document.getElementById('customeraddress').innerHTML="";
+            document.getElementById('rawmateriallimit').innerHTML="";
+            document.getElementById('productionmateriallimit').innerHTML="";
+            document.getElementById('macRawMaterialId').innerHTML="";
+            document.getElementById('macRawMaterialOrigin').innerHTML="";
+            document.getElementById('macRawMaterialQuality').innerHTML="";
+            document.getElementById('macRawMaterialQuantity').innerHTML="";
+            document.getElementById('macMachineNumber').innerHTML="";
+            document.getElementById('macQualityOfProduct').innerHTML="";
+            document.getElementById('macQuantityOfProduct').innerHTML="";
+            document.getElementById('macLocationIdOnRack').innerHTML="";
+            document.getElementById('macLocationName').innerHTML="";
+            document.getElementById('logLocationIdOnRack').innerHTML="";
+            document.getElementById('logLocationName').innerHTML="";
+
 }
 </script>
 </html>
