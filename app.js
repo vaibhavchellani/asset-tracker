@@ -22,7 +22,9 @@ app.get('/shipment',function(err,res){
 app.get('/logistic',function(err,res){
     res.render('logistic.html');
 });
-
+app.get('/rawMaterialDash',function(err,res){
+    res.render('rawMaterialDash.html');
+});
 app.listen(3000,function () {
     console.log("Server started on port 3000");
 });
