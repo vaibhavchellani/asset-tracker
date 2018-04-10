@@ -178,7 +178,7 @@ contract AssetTracker {
         changeStatus(_id,11);
         assetIdToStatus[_id]=11;
         ownershipCount[30]--;
-        ownershipCount[11]--;
+        ownershipCount[11]++;
         assetIdToOwner[_id]=assetStore[_id].customerAddress;
     }
     
