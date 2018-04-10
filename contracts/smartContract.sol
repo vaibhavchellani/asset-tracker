@@ -78,11 +78,17 @@ contract AssetTracker {
         macShipment macShipmentVariable;
         macProduction macProductionVariable;
         macRawMaterial macRawMaterialVariable;
+        
     }
-    mapping(uint256 => Asset) assetStore;
-    mapping(uint256 => address) public assetIdToOwner;
+    mapping(uint256  => Asset) assetStore;
+    mapping(uint256 =>address) public assetIdToOwner;
+    // not effective as the whole array isnt returned 
+    //mapping(uint256 => uint256[]) public departmentToAssetId;
     uint256 public last=0;
-    
+    // keeps in account the ownershipCount of department
+    mapping(uint256 => uint256) public ownershipCount;
+    // asset id to status
+    mapping(uint256 => uint256) public assetIdToStatus;
     function placeOrder(string _name , string _desc, uint256 _productionQualityLowerLimit, uint256 _rawMaterialQualityLowerLimit){
             Asset memory _asset=Asset({
                 name:_name,
@@ -96,14 +102,30 @@ contract AssetTracker {
                 macShipmentVariable:macShipment(0,"null"),
                 macProductionVariable:macProduction(0,0,0),
                 macRawMaterialVariable:macRawMaterial(0,"null",0,0)
+                // macRawMaterialID:0,
+                // macRawMaterialOrigin:"null",
+                // macRawMaterialQuantity:0,
+                // macRawMaterialQuality:0
+                //macMachineNumber:0
+                //macQualityOfProduct:0,
+                //macQuantityOfProduct:0,
+                //macLocationIdOnRack:0
+                //macLocationName:"null",
+                //logLocationIdOnRack:0
+                //logLocationName:"null"
                 });
         //assetStore[last].logDepartmentVariable=logDepartment();
         assetStore[last]=_asset;
+        assetIdToStatus[last]=20;
+        ownershipCount[20]++;
         // assembly guy takes order , transferrs order to machinning guy
         assetIdToOwner[last]=machiningAddress;
+        
+        //departmentToAssetId[20].push(last);
         last++;
+
     }
-    function addDetailRawMaterialStakeHolder(uint256 _id,uint256 _rawMaterialId,uint256 rawMaterialQuality,uint256 rawMaterialQuantity,string origin) onlyMachiningAddress {
+    function addDetailRawMaterialStakeHolder(uint256 _id,uint256 _rawMaterialId,uint256 rawMaterialQuality,uint256 rawMaterialQuantity,string origin) onlyMachiningAddress{
         // check ownership and status.
         require(assetStore[_id].rawMaterialQualityLowerLimit<=rawMaterialQuality);
         require(assetStore[_id].status==20);
@@ -115,6 +137,10 @@ contract AssetTracker {
         assetStore[_id].macRawMaterialVariable.macRawMaterialID=_rawMaterialId;
         // change status to next stakeholder
         changeStatus(_id,21);
+        assetIdToStatus[_id]=21;
+        ownershipCount[20]--;
+        ownershipCount[21]++;
+
     }
     function addDetailProductionStakeHolder(uint256 _id,uint256 _machineNumber,uint256 _macQualityOfProduct,uint256 _macQuantityOfProduct) onlyMachiningAddress{
         
@@ -125,6 +151,9 @@ contract AssetTracker {
         assetStore[_id].macProductionVariable.macQuantityOfProduct=_macQuantityOfProduct;
         assetStore[_id].macProductionVariable.macQualityOfProduct=_macQualityOfProduct;
         changeStatus(_id,22);
+        assetIdToStatus[_id]=22;
+        ownershipCount[21]--;
+        ownershipCount[22]++;
     }
     
     function addDetailShipmentStakeHolder(uint256 _id,uint256 _macLocationIdOnRack,string _macLocationName) onlyMachiningAddress{
@@ -133,6 +162,9 @@ contract AssetTracker {
         assetStore[_id].macShipmentVariable.macLocationIdOnRack=_macLocationIdOnRack;
         assetStore[_id].macShipmentVariable.macLocationName=_macLocationName;
         changeStatus(_id,30);
+        assetIdToStatus[_id]=30;
+        ownershipCount[22]--;
+        ownershipCount[30]++;
         assetIdToOwner[_id]=logisticAddress;
 
         
@@ -144,6 +176,9 @@ contract AssetTracker {
         assetStore[_id].logDepartmentVariable.logLocationName=_logLocationName;
         // order ready to be delivered 
         changeStatus(_id,11);
+        assetIdToStatus[_id]=11;
+        ownershipCount[30]--;
+        ownershipCount[11]--;
         assetIdToOwner[_id]=assetStore[_id].customerAddress;
     }
     
@@ -193,6 +228,32 @@ contract AssetTracker {
             assetStore[_id].logDepartmentVariable.logLocationIdOnRack,
             assetStore[_id].logDepartmentVariable.logLocationName
             );
+    }
+    
+    function tokensOfStakeholder(uint256 stakeHolder) constant returns (uint256[]){
+        uint256 assetCount = ownershipCount[stakeHolder];
+
+        if (assetCount == 0) {
+            // Return an empty array
+            return new uint256[](0);
+        } else {
+            uint256[] memory result = new uint256[](assetCount);
+            uint256 totalLocks = last-1;
+            uint256 resultIndex = 0;
+
+            // We count on the fact that all cats have IDs starting at 1 and increasing
+            // sequentially up to the totalCat count.
+            uint256 lockId;
+
+            for (lockId = 1; lockId <= totalLocks; lockId++) {
+                if (assetIdToStatus[lockId] == stakeHolder) {
+                    result[resultIndex] = lockId;
+                    resultIndex++;
+                }
+            }
+
+            return result;
+        }
     }
     
 }
