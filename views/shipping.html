@@ -2,22 +2,80 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Shipping </title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-    <h1 align="center">Shipping Data </h1>
-    <div align="center">
-            <input id="idInput" placeholder="Enter input ID"></input><br>
-            
-            <input id="rack" placeholder="Enter Location on Rack "></input><br>
-            <input id="name" placeholder="Enter Location Name"></input><br>
-            
-            <button type="button" onClick="enterData()"> SUBMIT </button>
-            
+    <title>Shipping</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Scania Blockchain System</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="shippingDash.html">
+                                Dashboard
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h2>Shipping Data </h2>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="idInput" class="control-label col-sm-2">
+                            <h5>ID</h5>
+                        </label>
+                        <div class="col-sm-10">
+                            <input input type="text" class="form-control" id="idInput" name="idInput" placeholder="Enter input ID" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rack" class="control-label col-sm-2">
+                            <h5>Rack</h5>
+                        </label>
+                        <div class="col-sm-10">
+                            <input input type="text" class="form-control" id="rack" name="rack" placeholder="Enter Location on Rack" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-2">
+                            <h5>Location Name</h5>
+                        </label>
+                        <div class="col-sm-10">
+                            <input input type="text" class="form-control" id="name" name="name" placeholder="Enter Location Name" required>
+                        </div>
+                    </div>
+                    
+
+				</form>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" onClick="enterData()">Submit</button>
+				</div>
+            </main>
+        </div>
     </div>
 </body>
 <script>

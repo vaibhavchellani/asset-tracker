@@ -5,24 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Finished Orders DashBoard</title>
+	<title>Finished Orders DashBoard</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="css/dashboard.css" rel="stylesheet">
 </head>
 <body>
-        
-    <div id="container">
-        <div>
-            <div>Name of Asset : Name</div>
-            <div>Description of Asset : Description</div>
-            <div>Status of Asset : Status</div>
-            <div>Product ID of Asset : Product ID</div>
-            <div>Owner Address of Asset : Address</div>
-            <div>Raw Material Quality Limit of Asset : 6</div>
-            <div>Production  Quality Limit of Asset : 6</div>
-            <br>
-        </div>
-    </div>
-
-
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Scania Blockchain System</a>
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap">
+				<a class="nav-link" href="#">Sign out</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="logistic.html">
+								Finished Orders
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+					<h2>Finished Orders Dashboard</h2>
+				</div>
+				<h4>Asset Details</h4>
+				<div class="table-responsive">
+					<table class="table table-striped table-sm">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th>Product ID</th>
+								<th>Owner Address</th>
+								<th>Raw Material Limit</th>
+								<th>Production Limit</th>
+							</tr>
+						</thead>
+						<tbody id="container">
+							
+						</tbody>
+					</table>
+				</div>
+			</main>
+		</div>
+	</div>
 </body>
 <script>
 web3 = new Web3(web3.currentProvider);
@@ -485,7 +521,7 @@ ContractInstance.getAssetOverview(id,function(e,r){
         if(!e){
             // fetch other details after checking status 
             console.log("from getAssetOverview we got this "+r);
-            document.getElementById('container').innerHTML += "<div><div>Name of Asset : "+r[0].toString()+"</div><div>Description of Asset : "+r[1].toString()+"</div><div>Status of Asset : "+r[2].toString()+"</div><div>Product ID of Asset : "+r[3].toString()+"</div><div>Owner Address of Asset : "+r[4].toString()+"</div><div>Raw Material Quality Limit of Asset : "+r[5].toString()+"</div><div>Production  Quality Limit of Asset : "+r[6].toString()+"</div></div><br>";
+			document.getElementById('container').innerHTML += "<tbody><tr><td>"+r[0].toString()+"</td><td>"+r[1].toString()+"</td><td>"+r[2].toString()+"</td><td>"+r[3].toString()+"</td><td>"+r[4].toString()+"</td><td>"+r[5].toString()+"</td><td>"+r[6].toString()+"</td></tr></tbody>";
 
         }
         else{
