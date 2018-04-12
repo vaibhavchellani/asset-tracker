@@ -2,49 +2,103 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Asset Details </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" type="text/css" rel="stylesheet">
 </head>
+
 <body>
-    <div align="center">
-    <input type="text" id="productID" placeholder="Enter your asset ID"></input><br>
-    <button type="button" onClick="getDetails()">Get Asset Details </button>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Scania Blockchain System</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="assetDetails.html">
+                                Asset Details
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h2>Asset Details</h2>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="product_id" class="control-label col-sm-2">
+                            <h5>Asset ID</h5>
+                        </label>
+                        <div class="col-sm-10">
+                            <input input type="text" class="form-control" id="productID" name="productID" placeholder="Enter your asset ID"
+                                required>
+                        </div>
+                    </div>
+
+				</form>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" onClick="getDetails()">Get Asset Details</button>
+				</div>
+                <div align="center">
+                    <div id="name"></div>
+                    <br>
+                    <div id="desc"></div>
+                    <br>
+                    <div id="status"></div>
+                    <br>
+                    <div id="productid"></div>
+                    <br>
+                    <div id="customeraddress"></div>
+                    <br>
+                    <div id="rawmateriallimit"></div>
+                    <br>
+                    <div id="productionmateriallimit"></div>
+                    <br>
+
+                    <div id="macRawMaterialId"></div>
+                    <br>
+                    <div id="macRawMaterialOrigin"></div>
+                    <br>
+                    <div id="macRawMaterialQuality"></div>
+                    <br>
+                    <div id="macRawMaterialQuantity"></div>
+                    <br>
+
+                    <div id="macMachineNumber"></div>
+                    <br>
+                    <div id="macQualityOfProduct"></div>
+                    <br>
+                    <div id="macQuantityOfProduct"></div>
+                    <br>
+                </div>
+
+            </main>
+        </div>
     </div>
-
-    <div align="center">
-        <div id="name"></div><br>
-        <div id="desc"></div><br>
-        <div id="status"></div><br>
-        <div id="productid"></div><br>
-        <div id="customeraddress"></div><br>
-        <div id="rawmateriallimit"></div><br>
-        <div id="productionmateriallimit"></div><br>
-
-
-        <div id="macRawMaterialId"></div><br>
-        <div id="macRawMaterialOrigin"></div><br>
-        <div id="macRawMaterialQuality"></div><br>
-        <div id="macRawMaterialQuantity"></div><br>
-
-        <div id="macMachineNumber"></div><br>
-        <div id="macQualityOfProduct"></div><br>
-        <div id="macQuantityOfProduct"></div><br>
-
-        
-        <div id="macLocationIdOnRack"></div><br>
-        <div id="macLocationName"></div><br>
-        <div id="logLocationIdOnRack"></div><br>
-        <div id="logLocationName"></div><br>
-    
-    </div>
-    <div id="trial"></div>
-
 </body>
 
-<script>
 
+<script>
 web3 = new Web3(web3.currentProvider);
 web3.eth.defaultAccount = web3.eth.accounts[0];
 var AssetTrackerRopstenAddress = '0xe3627e24f9c1ce9b784aa6a1034267e0fc01ae92';
@@ -490,7 +544,6 @@ var AssetTrackerABI = web3.eth.contract([
 ]);
 var ContractInstance = AssetTrackerABI.at(AssetTrackerRopstenAddress);
 function getDetails(){
-
     var id = document.getElementById('productID').value;
 
     ContractInstance.getAssetOverview(id,function(e,r){
