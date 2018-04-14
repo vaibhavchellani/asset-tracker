@@ -80,8 +80,8 @@ contract AssetTracker {
         macRawMaterial macRawMaterialVariable;
         
     }
-    mapping(uint256  => Asset) assetStore;
-    mapping(uint256 =>address) public assetIdToOwner;
+    mapping(uint256=>Asset) assetStore;
+    mapping(uint256=>address) public assetIdToOwner;
     // not effective as the whole array isnt returned 
     //mapping(uint256 => uint256[]) public departmentToAssetId;
     uint256 public last=0;

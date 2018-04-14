@@ -39,6 +39,9 @@ app.get('/logisticDash',function(err,res){
 app.get('/readyDash',function(err,res){
     res.render('readyDash.html');
 });
+app.get('/home',function(err,res){
+    res.render('index.html');
+});
 app.listen(3000,function () {
     console.log("Server started on port 3000");
 });
